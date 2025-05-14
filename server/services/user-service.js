@@ -8,7 +8,7 @@ class UserService {
     async registration(name, email, password) {
         const candidate = await UserModel.findOne({email})
         if (candidate) {
-            throw ApiError.BadRequest(`Користувач із поштовою адресою ${email} вже існує`)
+            throw ApiError.BadRequest(`User already exists`)
         }
         const hashPassword = await bcrypt.hash(password, 3)
 
@@ -25,11 +25,11 @@ class UserService {
     async login(email, password) {
         const user = await UserModel.findOne({email})
         if(!user) {
-            throw ApiError.BadRequest(`Користувач з таким email не був знайдений`)
+            throw ApiError.BadRequest(`User not found`)
         }
         const isPassEquals = await bcrypt.compare(password, user.password)
         if (!isPassEquals) {
-            throw ApiError.BadRequest('Некоректний пароль')
+            throw ApiError.BadRequest('Invalid password')
         }
 
         const userDto = new UserDto(user)

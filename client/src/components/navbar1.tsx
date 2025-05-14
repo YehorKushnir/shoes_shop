@@ -1,4 +1,4 @@
-import {Book, Menu, Sunset, Trees, User, Zap} from "lucide-react";
+import {Menu, User} from "lucide-react";
 
 import {
     Accordion,
@@ -27,6 +27,7 @@ import {
     DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu.tsx'
+import {Skeleton} from '@/components/ui/skeleton.tsx'
 
 interface MenuItem {
     title: string;
@@ -44,16 +45,6 @@ interface Navbar1Props {
         title: string;
     };
     menu?: MenuItem[];
-    auth?: {
-        login: {
-            title: string;
-            url: string;
-        };
-        signup: {
-            title: string;
-            url: string;
-        };
-    };
 }
 
 const Navbar1 = (
@@ -64,80 +55,10 @@ const Navbar1 = (
             alt: "Shoe",
             title: "Shoes Shop",
         },
-        menu = [
-            {title: "Home", url: "#"},
-            {
-                title: "Products",
-                url: "#",
-                items: [
-                    {
-                        title: "Blog",
-                        description: "The latest industry news, updates, and info",
-                        icon: <Book className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                    {
-                        title: "Company",
-                        description: "Our mission is to innovate and empower the world",
-                        icon: <Trees className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                    {
-                        title: "Careers",
-                        description: "Browse job listing and discover our workspace",
-                        icon: <Sunset className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                    {
-                        title: "Support",
-                        description:
-                            "Get in touch with our support team or visit our community forums",
-                        icon: <Zap className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                ],
-            },
-            {
-                title: "Resources",
-                url: "#",
-                items: [
-                    {
-                        title: "Help Center",
-                        description: "Get all the answers you need right here",
-                        icon: <Zap className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                    {
-                        title: "Contact Us",
-                        description: "We are here to help you with any questions you have",
-                        icon: <Sunset className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                    {
-                        title: "Status",
-                        description: "Check the current status of our services and APIs",
-                        icon: <Trees className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                    {
-                        title: "Terms of Service",
-                        description: "Our terms and conditions for using our services",
-                        icon: <Book className="size-5 shrink-0"/>,
-                        url: "#",
-                    },
-                ],
-            },
-            {
-                title: "Pricing",
-                url: "#",
-            },
-            {
-                title: "Blog",
-                url: "#",
-            },
-        ],
+        menu = [],
     }: Navbar1Props) => {
     const user = useStore(state => state.user)
+    const loading = useStore(state => state.loading)
     const logout = useStore(state => state.logout)
 
     const handleLogout = async () => {
@@ -151,12 +72,12 @@ const Navbar1 = (
                 <nav className="hidden justify-between lg:flex">
                     <div className="flex items-center gap-6">
                         {/* Logo */}
-                        <a href={logo.url} className="flex items-center gap-2">
+                        <Link to={logo.url} className="flex items-center gap-2">
                             <img src={logo.src} className="max-h-8" alt={logo.alt}/>
                             <span className="text-lg font-semibold tracking-tighter">
                                 {logo.title}
                             </span>
-                        </a>
+                        </Link>
                         <div className="flex items-center">
                             <NavigationMenu>
                                 <NavigationMenuList>
@@ -166,16 +87,18 @@ const Navbar1 = (
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        {!!user ? (
+                        {loading ? (
+                            <Skeleton className={'w-40 h-8'}/>
+                        ) : !!user ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
                                     <Button variant={'outline'} size="sm">
-                                        <User /> {user?.name}
+                                        <User/> {user?.name}
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
                                     <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
+                                    <DropdownMenuSeparator/>
                                     <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
@@ -196,9 +119,12 @@ const Navbar1 = (
                 <div className="block lg:hidden">
                     <div className="flex items-center justify-between px-4">
                         {/* Logo */}
-                        <a href={logo.url} className="flex items-center gap-2">
+                        <Link to={logo.url} className="flex items-center gap-2">
                             <img src={logo.src} className="max-h-8" alt={logo.alt}/>
-                        </a>
+                            <span className="text-lg font-semibold tracking-tighter">
+                                {logo.title}
+                            </span>
+                        </Link>
                         <Sheet>
                             <SheetTrigger asChild>
                                 <Button variant="outline" size="icon">
