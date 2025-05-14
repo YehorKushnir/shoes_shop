@@ -4,6 +4,7 @@ import {useQuery} from '@tanstack/react-query'
 import {ProductService} from '@/services/ProductService.ts'
 import {Skeleton} from '@/components/ui/skeleton.tsx'
 import {Link} from 'react-router'
+import {API_URL} from '@/http'
 
 const HomePage = () => {
     const {isPending, error, data} = useQuery({
@@ -37,7 +38,7 @@ const HomePage = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className={'h-[286px]'}>
-                                <img className={'rounded-xl object-cover h-full w-full'} src={item.variants[0].images[0]} alt={item.name}/>
+                                <img className={'rounded-xl object-cover h-full w-full'} src={`${API_URL}${item.variants[0].images[0]}`} alt={item.name}/>
                             </CardContent>
                         </Card>
                     </Link>

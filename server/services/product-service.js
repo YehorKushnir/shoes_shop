@@ -8,19 +8,46 @@ class ProductService {
 
     async getById(id) {
         const product = await ProductModel.findById(id)
-        if(!product) {
+        if (!product) {
             throw ApiError.BadRequest(`Product not found`)
         }
 
         return product
     }
 
-    async create(data) {
-        return ProductModel.create(data)
+    async create(body, files) {
+        const name = body.name
+        if (!name) {
+            throw ApiError.BadRequest("Name is required")
+        }
+
+        const variantsInput = body.variants
+        if (!Array.isArray(variantsInput)) {
+            throw ApiError.BadRequest("Variants should be an array")
+        }
+
+        const variants = variantsInput.map((variant, i) => {
+            const color = variant.color
+            const price = parseFloat(variant.price)
+            const sizes = Array.isArray(variant.sizes) ? variant.sizes : [variant.sizes]
+
+            const images = Array.isArray(files)
+                ? files
+                    .filter((f) => f.fieldname === `variants[${i}][images]`)
+                    .map((f) => {
+                        const filename = `${f.filename}`
+                        return `/uploads/${filename}`
+                    })
+                : []
+
+            return { color, price, sizes, images }
+        })
+
+        return ProductModel.create({ name, variants })
     }
 
     async update(id, data) {
-        return ProductModel.findByIdAndUpdate(id, data, { new: true })
+        return ProductModel.findByIdAndUpdate(id, data, {new: true})
     }
 
     async remove(id) {
@@ -29,7 +56,7 @@ class ProductService {
 
     async addReview(productId, review, user) {
         const product = await ProductModel.findById(productId)
-        if(!product) {
+        if (!product) {
             throw ApiError.BadRequest(`Product not found`)
         }
 

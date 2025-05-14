@@ -13,8 +13,9 @@ class ProductController {
     }
 
     async create(req, res) {
+        console.log(req.files)
         try {
-            const created = await ProductService.create(req.body)
+            const created = await ProductService.create(req.body, req.files)
             res.status(201).json(created)
         } catch (err) {
             res.status(400).json({ message: err.message })

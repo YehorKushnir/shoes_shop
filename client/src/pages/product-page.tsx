@@ -12,6 +12,7 @@ import {Card, CardContent} from '@/components/ui/card.tsx'
 import {format} from 'date-fns'
 import {ReviewFormCard} from '@/components/review-form-card.tsx'
 import {Carousel, CarouselContent, CarouselItem} from '@/components/ui/carousel.tsx'
+import {API_URL} from '@/http'
 
 const ProductPage = () => {
     const {id} = useParams()
@@ -137,7 +138,7 @@ const ProductPage = () => {
                     {variant?.images.map(item => (
                         <div className={'w-15 h-15'} key={item} onMouseEnter={() => handeImage(item)}>
                             <img
-                                src={item}
+                                src={`${API_URL}${item}`}
                                 alt={data.name}
                                 className={`rounded-lg object-cover h-full w-full ${item === image && 'border-1 border-black'}`}
                             />
@@ -145,7 +146,7 @@ const ProductPage = () => {
                     ))}
                 </div>
                 <div className={'w-full max-w-[500px]'}>
-                    <img className={'rounded-lg object-contain w-full'} src={image} alt={data.name}/>
+                    <img className={'rounded-lg object-contain w-full'} src={`${API_URL}${image}`} alt={data.name}/>
                 </div>
                 <div className={'w-full max-w-[382px] flex flex-col gap-8'}>
                     <div className={'flex flex-col gap-1'}>
@@ -165,7 +166,7 @@ const ProductPage = () => {
                                 onClick={() => handeVariant(item)}
                             >
                                 <img
-                                    src={item.images[0]}
+                                    src={`${API_URL}${item.images[0]}`}
                                     alt={data.name}
                                     className={`rounded-lg object-cover h-full w-full ${item.color === variant?.color && 'border-1 border-black'}`}
                                 />
@@ -193,7 +194,7 @@ const ProductPage = () => {
                         {variant?.images.map(item => (
                             <CarouselItem>
                                 <div className={'w-full h-[400px] sm:h-[500px] flex items-center justify-center overflow-hidden rounded-lg'}>
-                                    <img className={'rounded-lg object-cover w-full'} src={item} alt={data.name}/>
+                                    <img className={'rounded-lg object-cover w-full'} src={`${API_URL}${item}`} alt={data.name}/>
                                 </div>
                             </CarouselItem>
                         ))}
@@ -216,7 +217,7 @@ const ProductPage = () => {
                             onClick={() => handeVariant(item)}
                         >
                             <img
-                                src={item.images[0]}
+                                src={`${API_URL}${item.images[0]}`}
                                 alt={data.name}
                                 className={`rounded-lg object-cover h-full w-full ${item.color === variant?.color && 'border-1 border-black'}`}
                             />

@@ -10,8 +10,8 @@ export class ProductService {
     static async getById(id: string): Promise<AxiosResponse<Product>> {
         return await $api.get<Product>(`/product/${id}`)
     }
-    static async create() {
-        await $api.post('/product')
+    static async create(data: FormData) {
+        await $api.post('/product', data)
     }
     static async update(id: string): Promise<AxiosResponse<Product>> {
         return await $api.put(`/product:${id}`)

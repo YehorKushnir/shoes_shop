@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useLocation} from 'react-router'
+import {Route, Routes, useLocation} from 'react-router'
 import {useStore} from '@/store.ts'
 import {useEffect} from 'react'
 import ProtectedRoute from '@/components/protected-route.tsx'
@@ -53,9 +53,6 @@ function App() {
                         }
                     />
                 ))}
-
-
-                <Route path="*" element={<Navigate to="/"/>}/>
             </Routes>
         </>
     )
