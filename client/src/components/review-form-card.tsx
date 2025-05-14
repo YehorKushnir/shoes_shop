@@ -10,6 +10,8 @@ import { useState } from "react"
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import {useParams} from 'react-router'
 import {ProductService} from '@/services/ProductService.ts'
+import {toast} from 'sonner'
+import type {AxiosError} from 'axios'
 
 const reviewSchema = z.object({
     rating: z.number().min(1, "Please select a rating"),
@@ -42,6 +44,11 @@ export function ReviewFormCard() {
             form.reset()
             await queryClient.invalidateQueries({ queryKey: ["product", id] })
         },
+        onError: (error: AxiosError) => {
+            if (error.status === 401) {
+                toast('You should authenticate to review a product')
+            }
+        }
     })
 
     return (

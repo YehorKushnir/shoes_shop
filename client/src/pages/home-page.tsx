@@ -25,7 +25,7 @@ const HomePage = () => {
                         <Skeleton className="w-full h-[400px]"/>
                     </>
                 ) : data.map((item) => (
-                    <Link to={`/product/${item._id}`}>
+                    <Link key={item._id} to={`/product/${item._id}`}>
                         <Card className={'w-full max-h-[400px] cursor-pointer'}>
                             <CardHeader>
                                 <CardTitle>{item.name}</CardTitle>

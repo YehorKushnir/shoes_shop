@@ -1,12 +1,12 @@
-import {Menu, User} from "lucide-react";
+import {Menu, User} from "lucide-react"
 
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from "@/components/ui/accordion";
-import {Button} from "@/components/ui/button";
+} from "@/components/ui/accordion"
+import {Button} from "@/components/ui/button"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -14,12 +14,12 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/navigation-menu"
 import {
     Sheet,
     SheetContent, SheetHeader,
     SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/components/ui/sheet"
 import {useStore} from '@/store.ts'
 import {Link} from 'react-router'
 import {
@@ -30,21 +30,21 @@ import {
 import {Skeleton} from '@/components/ui/skeleton.tsx'
 
 interface MenuItem {
-    title: string;
-    url: string;
-    description?: string;
-    icon?: React.ReactNode;
-    items?: MenuItem[];
+    title: string
+    url: string
+    description?: string
+    icon?: React.ReactNode
+    items?: MenuItem[]
 }
 
 interface Navbar1Props {
     logo?: {
-        url: string;
-        src: string;
-        alt: string;
-        title: string;
-    };
-    menu?: MenuItem[];
+        url: string
+        src: string
+        alt: string
+        title: string
+    }
+    menu?: MenuItem[]
 }
 
 const Navbar1 = (
@@ -171,8 +171,8 @@ const Navbar1 = (
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
 const renderMenuItem = (item: MenuItem) => {
     if (item.items) {
@@ -187,20 +187,20 @@ const renderMenuItem = (item: MenuItem) => {
                     ))}
                 </NavigationMenuContent>
             </NavigationMenuItem>
-        );
+        )
     }
 
     return (
         <NavigationMenuItem key={item.title}>
-            <NavigationMenuLink
-                href={item.url}
+            <Link
+                to={item.url}
                 className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
             >
                 {item.title}
-            </NavigationMenuLink>
+            </Link>
         </NavigationMenuItem>
-    );
-};
+    )
+}
 
 const renderMobileMenuItem = (item: MenuItem) => {
     if (item.items) {
@@ -215,21 +215,21 @@ const renderMobileMenuItem = (item: MenuItem) => {
                     ))}
                 </AccordionContent>
             </AccordionItem>
-        );
+        )
     }
 
     return (
         <a key={item.title} href={item.url} className="text-md font-semibold">
             {item.title}
         </a>
-    );
-};
+    )
+}
 
 const SubMenuLink = ({item}: { item: MenuItem }) => {
     return (
-        <a
+        <Link
             className="flex flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-muted hover:text-accent-foreground"
-            href={item.url}
+            to={item.url}
         >
             <div className="text-foreground">{item.icon}</div>
             <div>
@@ -240,8 +240,8 @@ const SubMenuLink = ({item}: { item: MenuItem }) => {
                     </p>
                 )}
             </div>
-        </a>
-    );
-};
+        </Link>
+    )
+}
 
-export {Navbar1};
+export {Navbar1}
