@@ -18,6 +18,7 @@ const menu = [
 
 function App() {
     const location = useLocation()
+    console.log(location)
     const isNavbarVisible = !hideNavbarPaths.includes(location.pathname)
 
     const loading = useStore(state => state.loading)
