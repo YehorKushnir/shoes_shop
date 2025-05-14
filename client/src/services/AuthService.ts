@@ -14,6 +14,6 @@ export class AuthService {
         await $api.post('/logout')
     }
     static async refresh(): Promise<AxiosResponse<AuthResponse>> {
-        return await $api.get('/refresh')
+        return await $api.get('/refresh', {withCredentials: true})
     }
 }
